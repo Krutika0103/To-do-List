@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+    <title>DoneItt - Your Personal Todo List</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="jumbotron bg-warning">
+        <div class="text-center">
+            <h1 class="display-4">DoneItt</h1>
+            <p class="lead">Your Personal Todo List Helping You Keep All Your Tasks Together One Day At A Time.</p>
+            <div th:if="${tasks.size()>0}">
+                <a th:href="@{/task/newTask}" class="btn btn-lg btn-primary" role="button">New Task</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div th:if="${tasks.size()== 0}" class="text-center">
+                <p>You Don't Have Any Task To Do Yet.</p>
+                <a th:href="@{/task/newTask}" class="btn btn-lg btn-primary" role="button">Why Don't You Create A New One Here?</a>
+            </div>
+            <div th:if="${tasks.size()>0}">
+                <table class="table table-hover">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Creator</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="task:${tasks}">
+                        <td th:text="${task.title}"></td>
+                        <td th:text="${task.description}"></td>
+                        <td th:text="${task.creator}"></td>
+                        <td>
+                            <a th:href="@{'/task/{id}' (id=${task.id})}" class="btn btn-primary btn-sm" role="button">View</a>
+                            <form th:action="@{'/task/{id}/delete'( id=${task.id})}" th:method="delete" class="d-inline">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

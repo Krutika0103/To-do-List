@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>todolist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        a {
+            display: inline-block;
+            margin-right: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        button[type="submit"] {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div>
+        <h3>Welcome to DoneItt!</h3>
+        <p>Your Personal Todo List Helping You Keep All Your Tasks Together One Day At A Time.</p>
+        <a th:href="@{/task/newTask}">New Task</a>
+        <a th:href="@{/}">Home</a>
+    </div>
+
+    <div>
+        <form th:object="${task}">
+            <h3 th:text="*{title}">Your Task</h3>
+            <p th:text="*{description}"></p>
+            <p th:text="*{creator}"></p>
+            <a th:href="@{'/task/{id}/edit' (id=${task.id})}">Edit</a>
+        </form>
+
+        <form th:action="@{/task/{id}/delete(id=${task.id})}" method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit">Delete</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
